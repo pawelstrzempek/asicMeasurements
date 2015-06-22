@@ -25,10 +25,13 @@ f = TFile("test2_output.root","recreate");
 def asicSet():
 	global reg_index
 	cmd = "trbcmd w 0xe002 0xa000  0x52"+format(reg_index,'x')+"1f"
+	ret_value = '0x52'+format(reg_index,'x')+'1f'
 	os.system(cmd)
+	print 'asic set as: ' + cmd
 	reg_index += 1
 	if (reg_index == 12):
 		reg_index = 0
+	return ret_value
 
 def addDataToFile(data,nameIndex):
 	#f = open('workfile_tmp.txt', 'a')
@@ -57,18 +60,18 @@ class EchoClient(protocol.Protocol):
     """Once connected, send a message, then print the result."""
 
     def connectionMade(self):
-	asicSet()
-	time.sleep(4)
-        self.transport.write("initial transaction") #this is stransaction to scope, it will react by taking data and returning them
+	setting = asicSet()
+	time.sleep(2)
+        self.transport.write(setting) #this is stransaction to scope, it will react by taking data and returning them
 
     def dataReceived(self, data):
-        #print "Server said:", data
+        print "Server said:", data
 	global name_index
 	name_index += 1
-	addDataToFile(data, name_index)
-	asicSet()
-	time.sleep(4)
-	self.transport.write("transaction: give me data")
+	#addDataToFile(data, name_index)
+	setting = asicSet()
+	time.sleep(2)
+	self.transport.write(setting)
 
 
 #        self.transport.loseConnection()

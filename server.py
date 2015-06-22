@@ -16,7 +16,8 @@ class Echo(protocol.Protocol):
         "As soon as any data is received, write it back."
         #time.sleep(5)
         print "I have received: " + str(data)
-        payload = collect_scope_data()
+        #payload = collect_scope_data()
+	payload = '35-0x52011' 
         self.transport.write(payload)
 
 

@@ -1,0 +1,10 @@
+Testing scripts:
+1=====================================
+script name: errorTest1.py
+output name: test1_output.root
+description: This scripts write asic register and reads it back. If the value is the same then the h_rece (recevied) histogram is filled in the output file. Each time the register is set the h_send histogram is written. If both h_rece and h_send histograms are the same then everything is ok.
+
+2=====================================
+script name: errorTest2.py
+output name: test2_output.root
+description: This script sets in turns wide and narrow asic settings. Each time wait for measurements from scope. The goal is to check if each asic settings change has influence on analog signal.
