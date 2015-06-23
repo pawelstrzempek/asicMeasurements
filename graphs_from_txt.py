@@ -8,9 +8,9 @@ path = r'./data/'  # remove the trailing '\'
 f = TFile( path+"waveforms_output.root" ,"recreate");
 print 'Take data from ' + path
 print 'Save output to ' + path+'waveforms_output.root'
-data = {}
+#data = {}
 
-def addDataToRootFile(data):
+def addDataToRootFile(data, name):
         #f = open('workfile_tmp.txt', 'a')
         #f.write(data)
         lines = data.split('\n')
@@ -25,17 +25,17 @@ def addDataToRootFile(data):
                         y[i] = float(pair[1])
 #			print 'x='+pair[0]+" y="+pair[1]
         g = TGraph(x,y)
-        g.Write()
+        g.Write(str(name))
         print 'write graph'
 
 for dir_entry in os.listdir(path):
     dir_entry_path = os.path.join(path, dir_entry)
     if os.path.isfile(dir_entry_path):
-	if (dir_entry_path[-3:] =='txt'):
+	if (dir_entry_path[-3:] =='txt'):#we look only for txt data files
 	        with open(dir_entry_path, 'r') as my_file:
 	#            data[dir_entry] = my_file.read()
-		    print dir_entry
+	#	    print dir_entry
 	#	    addDataToRootFile(str(data))
-		    addDataToRootFile(my_file.read())
+		    addDataToRootFile(my_file.read(),dir_entry)
 
 
