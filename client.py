@@ -20,7 +20,7 @@ from ROOT import TVector
 reg_index = 0
 name_index = 0
 
-f = TFile("test2_output.root","recreate");
+f = TFile("testx_output.root","recreate");
 
 def asicSet():
 	global reg_index

@@ -4,8 +4,8 @@ from ROOT import TFile
 from ROOT import TGraph
 from ROOT import TVector
 
-path = r'./data/'  # remove the trailing '\'
-f = TFile( path+"waveforms_output.root" ,"recreate");
+path = r'./data/scan'  # remove the trailing '\'
+f = TFile( path+"/waveforms_output.root" ,"recreate");
 print 'Take data from ' + path
 print 'Save output to ' + path+'waveforms_output.root'
 #data = {}
