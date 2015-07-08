@@ -20,7 +20,7 @@ from ROOT import TVector
 # a client protocol
 #flag = 0
 
-resetIteration = 10
+resetIteration = 20
 currentIndex = 0
 regValTable_A = []
 regValTable_B = []
@@ -43,6 +43,16 @@ def getfilename(whichFile):#1 or 2
                 sys.exit(1)
         return filename
 
+def resetASICs():
+	"""RESETING all 3 FEBs"""
+	os.system("trbcmd w 0xe000 0xa000 0x300000")
+	time.sleep(1)
+	os.system("trbcmd w 0xe000 0xa000 0x280000")
+	time.sleep(1)
+	os.system("trbcmd w 0xe000 0xa000 0x200000")
+	time.sleep(2)
+	os.system("trbcmd w 0xe001 0xa000 0x280000")
+	time.sleep(2)
 
 
 def asicSet():
@@ -80,6 +90,8 @@ class EchoClient(protocol.Protocol):
 	if (currentIndex == 12):
 		currentIndex =0
 		resetIteration -=1
+		resetASICs()
+
 	time.sleep(5)
 	setting = asicSet()
 	time.sleep(2)
@@ -109,16 +121,8 @@ def main():
     global regValTable_B
     regValTable_A = readInData(getfilename(1))
     regValTable_B = readInData(getfilename(2))
-    """RESETING all 3 FEBs"""
-    os.system("trbcmd w 0xe000 0xa000 0x300000")
-    time.sleep(1)
-    os.system("trbcmd w 0xe000 0xa000 0x280000")
-    time.sleep(1)
-    os.system("trbcmd w 0xe000 0xa000 0x200000")
-    time.sleep(2)
-    os.system("trbcmd w 0xe001 0xa000 0x280000")
-    time.sleep(2)
 
+    resetASICs()
 
     f = EchoFactory()
     reactor.connectTCP("192.168.0.6", 8001, f)
