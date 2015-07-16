@@ -85,7 +85,9 @@ while 1:
 	os.system("trbcmd w 0xe000 0xa000 0x280000")
 	time.sleep(1)
 	os.system("trbcmd w 0xe000 0xa000 0x200000")
-	time.sleep(3)
+	time.sleep(1)
+	os.system("trbcmd w 0xe001 0xa000 0x280000")
+	time.sleep(2)
 	for i in range(0,len(data)-1):
 		print 'Testing reg '+str(i+1)+'/'+str(len(data)-1)+' : ' + data[i]
 #		cmd =  " 0xD2"+format(i,'x')+"1f"
@@ -97,7 +99,8 @@ while 1:
 		h_send.Fill(i);
 #		#proc = subprocess.Popen('trbcmd r 0xe000 0xa000', stdout=subprocess.PIPE)
 #		#tmp = proc.stdout.read()
-		tmp = os.popen('trbcmd r 0xe000 0xa000').read()
+		tdcAddr = data[i][data[i].find("0xe")+3:data[i].find("0xe")+6]
+		tmp = os.popen('trbcmd r 0xe'+tdcAddr+' 0xa000').read()
 		#tmp = "abcd"
 #		print ">"+tmp[-3:-1]+"< compare with >"+data[i][-2:]+"<"
 		if(tmp[-3:-1] == data[i][-2:]):
